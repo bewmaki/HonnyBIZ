@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ฮอนสุดหล่อ · xCore style profile</title>
+<meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล พื้นหลังฝน, ตัวอักษรโมโน, ฝั่งซ้ายเป็นภาพและโซเชียล, มี Spotify ฝังด้านบน">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { --bg: #0b0c10; --fg: #e5e7eb; --muted: #9ca3af; --link: #93c5fd; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
+  /* subtle scanlines */
+  .scanlines:before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 5;
+    background: repeating-linear-gradient(to bottom, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 2px, transparent 3px);
+    mix-blend-mode: soft-light;
+  }
+  /* rain */
+  .rain { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .drop {
+    position: absolute; width: 1px; height: 60px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.6));
+    filter: blur(.3px); opacity: .5;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0% { transform: translateY(-100px); opacity: 0.2; }
+    100% { transform: translateY(110vh); opacity: 0.6; }
+  }
+  /* underline links */
+  a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); }
+  a:hover { text-decoration-color: rgba(255,255,255,.9); }
+  .card { background: rgba(17,24,39,.55); border: 1px solid rgba(148,163,184,.2); backdrop-filter: blur(6px); }
+  /* gradient logo letters */
+  .logo span:nth-child(1){ color:#ef4444 } /* red */
+  .logo span:nth-child(2){ color:#f59e0b } /* amber */
+  .logo span:nth-child(3){ color:#10b981 } /* emerald */
+  .logo span:nth-child(4){ color:#60a5fa } /* blue */
+  .logo span:nth-child(5){ color:#a78bfa } /* violet */
+  /* print */
+  @media print{
+    .no-print { display:none!important }
+    .rain,.scanlines:before { display:none!important }
+    body { background: white; color:#111827 }
+    .card { background: white; border-color:#e5e7eb }
+    a { color:#1d4ed8 }
+  }
+</style>
+</head>
+<body class="scanlines">
+  <!-- animated rain -->
+  <div class="rain" id="rain"></div>
+
+  <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-10">
+    <div class="flex gap-6">
+      <!-- left sidebar -->
+      <aside class="w-60 shrink-0">
+        <div class="logo text-4xl font-bold tracking-tight leading-none mb-6">
+          <!-- เปลี่ยนตัวอักษรตรงนี้ถ้าอยากได้โลโก้แบบหลายสีทีละตัว -->
+          <span>H</span><span>O</span><span>N</span><span>Z</span><span>!</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=400&auto=format&fit=crop" alt="avatar" class="w-28 h-28 rounded-xl object-cover mb-6">
+        <ul class="space-y-2 text-[15px]">
+          <li>💻 <a href="https://github.com/yourname" target="_blank" rel="noreferrer">github</a></li>
+          <li>🪄 <a href="https://instagram.com/yourname" target="_blank" rel="noreferrer">xylina</a></li>
+          <li>📸 <a href="https://instagram.com/yourname" target="_blank" rel="noreferrer">instagram</a></li>
+        </ul>
+      </aside>
+
+      <!-- main -->
+      <main class="flex-1 space-y-6">
+        <!-- spotify -->
+        <section class="no-print">
+          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2xLMifQCjDGFmkHkpNLD9h?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </section>
+
+        <!-- intro -->
+        <section class="text-[15px] leading-7 whitespace-pre-line">
+Hi, i'm <span class="font-semibold">xCore</span>.
+
+Computer Science UBRU
+Faculty of education VU
+
+Information Technology, Sasin Chulalongkorn university
+Customer Service, Metro Systems Corporation Plc
+
+My Shop
+<a href="#" target="_blank" rel="noreferrer">Zerac Shop</a> [APP PREMIUM & DISCORD NITRO]
+        </section>
+
+        <!-- projects / servers -->
+        <section class="card rounded-xl p-5">
+          <div class="font-semibold mb-2">Server developed by xCore</div>
+          <ul class="list-disc pl-6 space-y-1">
+            <li><a href="#" target="_blank">77 จังหวัด</a> [450K]</li>
+            <li><a href="#" target="_blank">ALL GAMES COMMUNITY</a> [180K]</li>
+            <li><a href="#" target="_blank">Camel</a> [122K]</li>
+            <li><a href="#" target="_blank">Undawn</a> [180K]</li>
+            <li><a href="#" target="_blank">Stella</a> [22K]</li>
+            <li><a href="#" target="_blank">Genesis</a> [16K]</li>
+            <li><a href="#" target="_blank">Dream</a> [2K]</li>
+          </ul>
+        </section>
+
+        <!-- contact -->
+        <section class="text-[15px] leading-7">
+          <div>Contact: <a href="mailto:xcøre.dev@gmail.com">xcore.dev@gmail.com</a></div>
+          <div>Discord: <span class="select-all">@remornor</span></div>
+        </section>
+
+        <footer class="pt-6 text-center text-sm text-gray-400">
+          © <span id="year"></span> xCore <span class="text-emerald-400">♥</span> all rights reserved
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // rain generator
+    const container = document.getElementById('rain');
+    const drops = Math.min(160, Math.floor(window.innerWidth / 6));
+    for (let i=0; i<drops; i++) {
+      const d = document.createElement('div');
+      d.className = 'drop';
+      const left = Math.random() * 100;
+      const delay = Math.random() * 5;
+      const duration = 2.6 + Math.random() * 2.5;
+      const height = 40 + Math.random() * 80;
+      d.style.left = left + 'vw';
+      d.style.animationDelay = delay + 's';
+      d.style.animationDuration = duration + 's';
+      d.style.height = height + 'px';
+      container.appendChild(d);
+    }
+  </script>
+</body>
+</html>
