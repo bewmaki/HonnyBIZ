@@ -16,7 +16,6 @@
     --muted:#b9b2e6;      
     --primary:#a855f7;    
     --primary-2:#7c3aed;  
-    --ring:rgba(168,85,247,.35);
   }
   html,body{height:100%}
   body{
@@ -78,7 +77,6 @@
     height:1px; background:linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,.4), rgba(168,85,247,0));
   }
 
-  /* glow */
   .logo-glow{
     text-shadow: 0 0 10px rgba(168,85,247,.8), 0 0 25px rgba(124,58,237,.6);
     animation:logoPulse 2.8s ease-in-out infinite;
@@ -98,59 +96,33 @@
     50%{ box-shadow:0 0 25px #c084fc, 0 0 50px #a855f7, 0 0 80px #7c3aed; }
   }
 
-  /* Spotify: ให้ตรงกรอบเป๊ะ */
+  /* Spotify wrap */
   .spotify-wrap{
     position:relative;
     border-radius:14px;
-    padding:2px;                       /* ขอบกรอบ */
+    padding:2px;
     background:linear-gradient(90deg,#7c3aed,#a855f7);
-    box-shadow:0 12px 32px -16px rgba(124,58,237,.6);
-    max-width:100%;
-    margin-inline:auto;
-    overflow:hidden;                    /* ตัดส่วนเกินให้โค้งพอดี */
-  }
-  .spotify-wrap::before{
-    content:"";
-    position:absolute; inset:-14px;
-    border-radius:22px;
-    background:radial-gradient(closest-side,rgba(168,85,247,.5),transparent 70%);
-    filter:blur(22px); opacity:.55; pointer-events:none;
+    box-shadow:0 0 20px #a855f7,0 0 40px #9333ea,0 0 60px #7e22ce;
+    overflow:hidden;
   }
   .spotify-embed{
-    display:block;                      /* ตัดช่องว่าง baseline */
+    display:block;
     width:100%;
     height:152px;
     border:0;
-    border-radius:12px;                 /* มนเท่ากับกรอบ */
+    border-radius:12px;
   }
   @media (max-width:420px){
-    .spotify-embed{ height:118px; }     /* จอเล็กไม่ล้น */
-  }
-
-  /* ปรับเฉพาะมือถือ */
-  @media (max-width: 768px){
-    .mobile-container{ padding-left: 1rem; padding-right: 1rem; }
-    .mobile-gap{ gap: 1rem !important; }
-    .logo{ font-size: 2rem !important; }
-    .avatar{ width: 96px; height: 96px; }
-    .card{ padding: 1rem !important; }
-  }
-
-  @media print{
-    .no-print{display:none!important}
-    .rain,.scanlines:before{display:none!important}
-    body{background:white; color:#111827}
-    .card{background:white; border-color:#e5e7eb; box-shadow:none}
-    a{ color:#1d4ed8 }
+    .spotify-embed{ height:118px; }
   }
 </style>
 </head>
 <body class="scanlines">
   <div class="rain" id="rain"></div>
 
-  <div class="relative z-10 max-w-5xl mx-auto mobile-container px-4 py-6 md:py-10">
-    <div class="flex flex-col md:flex-row mobile-gap md:gap-6">
-      <!-- แถบซ้าย -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-10">
+    <div class="flex flex-col md:flex-row gap-6">
+      <!-- Sidebar -->
       <aside class="w-full md:w-60 shrink-0 md:text-left text-center">
         <div class="logo logo-glow text-3xl md:text-4xl font-extrabold tracking-tight leading-none mb-4 md:mb-6">
           <span>H</span><span>O</span><span>N</span><span>N</span><span>Y</span><span>!</span>
@@ -164,30 +136,25 @@
           <li>💻 <a href="https://hyper.sig-ma.shop" target="_blank" rel="noreferrer">hyper-x</a></li>
           <li>📸 <a href="https://www.instagram.com/bxw_.m" target="_blank" rel="noreferrer">instagram</a></li>
         </ul>
-
         <div class="md:hidden my-5 divider"></div>
       </aside>
 
-      <!-- เนื้อหา -->
+      <!-- Main -->
       <main class="flex-1 space-y-4 md:space-y-6">
-        <!-- Spotify (ตรงกรอบ) -->
+        <!-- Spotify -->
         <section class="no-print">
           <div class="spotify-wrap">
             <iframe class="spotify-embed"
-              src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
+              src="https://open.spotify.com/embed/track/1zLrSkFzVZwhSsYzBzr5Ti?utm_source=generator"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
               loading="lazy"></iframe>
           </div>
         </section>
 
-        <!-- แนะนำตัว -->
+        <!-- Intro -->
         <section class="card rounded-xl p-4 md:p-5">
-          <div class="text-[15px] leading-7 md:text-[15px]">
-Hi, i'm <span class="font-semibold">HONNY</span>.
-          </div>
-
+          <div class="text-[15px] leading-7">Hi, i'm <span class="font-semibold">HONNY</span>.</div>
           <div class="divider my-3 md:my-4"></div>
-
           <div class="text-[15px] leading-7">
             <div class="mb-2 font-semibold text-[16px]">My Shop</div>
             <a href="https://hyperx.osnvc.com/" target="_blank" rel="noopener" class="btn-primary w-full md:w-auto">🛒 เข้า Hyper-x Shop</a>
@@ -195,16 +162,16 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
           </div>
         </section>
 
-        <!-- บล็อกข้อมูลเพิ่มเติม -->
+        <!-- Blog -->
         <section class="card rounded-xl p-4 md:p-5">
           <div class="font-semibold mb-2">จากใจผู้ชายคนนี้</div>
           <ul class="list-disc pl-6 space-y-1 text-[15px]">
             <li>เขียนจากไข่ที่ไร้หมอยส่งถึงหอยที่ไร้ขน</li>
-            <li>ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตู ยันซอกตีน</li>
+            <li>ผมชอบหีและชอบหีมากๆ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตูยันซอกตีน</li>
           </ul>
         </section>
 
-        <!-- ติดต่อ -->
+        <!-- Contact -->
         <section class="card rounded-xl p-4 md:p-5">
           <div class="font-semibold mb-2">Contact</div>
           <div class="text-[15px] leading-7">
@@ -221,10 +188,7 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
   </div>
 
   <script>
-    // ปีปัจจุบัน
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ฝน: ลดจำนวนบนมือถือให้ลื่น
     const container = document.getElementById('rain');
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     const drops = isMobile ? Math.min(80, Math.floor(window.innerWidth / 10))
@@ -232,14 +196,10 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
     for (let i=0; i<drops; i++){
       const d = document.createElement('div');
       d.className = 'drop';
-      const left = Math.random() * 100;
-      const delay = Math.random() * 5;
-      const duration = (isMobile ? 3.2 : 2.6) + Math.random() * 2.5;
-      const height = (isMobile ? 30 : 40) + Math.random() * (isMobile ? 60 : 80);
-      d.style.left = left + 'vw';
-      d.style.animationDelay = delay + 's';
-      d.style.animationDuration = duration + 's';
-      d.style.height = height + 'px';
+      d.style.left = Math.random() * 100 + 'vw';
+      d.style.animationDelay = Math.random() * 5 + 's';
+      d.style.animationDuration = (isMobile ? 3.2 : 2.6) + Math.random() * 2.5 + 's';
+      d.style.height = (isMobile ? 30 : 40) + Math.random() * (isMobile ? 60 : 80) + 'px';
       container.appendChild(d);
     }
   </script>
