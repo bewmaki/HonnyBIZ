@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- สำคัญมากสำหรับมือถือ -->
 <title>MY PROFILE HONNY</title>
 <meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล โทนม่วง ไฟนีออน พร้อมลิงก์และ Spotify">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,12 +28,14 @@
     font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,'Liberation Mono','Courier New',monospace;
   }
 
+  /* scanlines */
   .scanlines:before{
     content:""; position:fixed; inset:0; pointer-events:none; z-index:4;
     background:repeating-linear-gradient(to bottom, rgba(255,255,255,.025), rgba(255,255,255,.025) 1px, transparent 2px, transparent 3px);
     mix-blend-mode:soft-light;
   }
 
+  /* rain */
   .rain{ position:fixed; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
   .drop{
     position:absolute; width:1px; height:60px;
@@ -66,7 +68,7 @@
   .btn-primary{
     background:linear-gradient(180deg, var(--primary), var(--primary-2));
     color:#120a1f; font-weight:700;
-    border-radius:12px; padding:.55rem 1rem; display:inline-flex; align-items:center; gap:.5rem;
+    border-radius:12px; padding:.65rem 1rem; display:inline-flex; align-items:center; justify-content:center; gap:.5rem;
     box-shadow: 0 10px 30px -12px rgba(168,85,247,.65), inset 0 0 0 1px rgba(255,255,255,.2);
     text-decoration:none !important;
   }
@@ -76,7 +78,7 @@
     height:1px; background:linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,.4), rgba(168,85,247,0));
   }
 
-  /* โลโก้ Glow Pulse */
+  /* glow */
   .logo-glow{
     text-shadow: 0 0 10px rgba(168,85,247,.8), 0 0 25px rgba(124,58,237,.6);
     animation:logoPulse 2.8s ease-in-out infinite;
@@ -86,7 +88,6 @@
     50%     { text-shadow: 0 0 16px #c084fc, 0 0 35px #9333ea; }
   }
 
-  /* Avatar glow pulse */
   .avatar-glow{
     border-radius:50%;
     box-shadow:0 0 20px #a855f7, 0 0 40px #7c3aed;
@@ -106,6 +107,19 @@
     box-shadow: 0 0 30px #c084fc, 0 0 60px #a855f7, 0 0 90px #9333ea;
   }
 
+  /* ปรับเฉพาะมือถือ */
+  @media (max-width: 768px){
+    .mobile-container{ padding-left: 1rem; padding-right: 1rem; }
+    .mobile-gap{ gap: 1rem !important; }
+    .logo{ font-size: 2rem !important; }                /* โลโก้เล็กลงนิด */
+    .avatar{ width: 96px; height: 96px; }               /* อวตารขนาดพอดี */
+    .card{ padding: 1rem !important; }                  /* การ์ดกระชับ */
+    .no-print iframe{ height: 130px !important; }       /* Spotify เตี้ยลงเล็กน้อย */
+  }
+  @media (max-width: 420px){
+    .no-print iframe{ height: 110px !important; }       /* จอเล็กมาก */
+  }
+
   @media print{
     .no-print{display:none!important}
     .rain,.scanlines:before{display:none!important}
@@ -118,53 +132,64 @@
 <body class="scanlines">
   <div class="rain" id="rain"></div>
 
-  <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-10">
-    <div class="flex gap-6">
-      <aside class="w-60 shrink-0">
-        <div class="logo logo-glow text-4xl font-extrabold tracking-tight leading-none mb-6">
+  <div class="relative z-10 max-w-5xl mx-auto mobile-container px-4 py-6 md:py-10">
+    <!-- จากเดิมที่เรียงซ้าย-ขวา ให้มือถือเป็นคอลัมน์ก่อน แล้ว md ขึ้นไปค่อยเป็นแถว -->
+    <div class="flex flex-col md:flex-row mobile-gap md:gap-6">
+      <!-- แถบซ้าย -->
+      <aside class="w-full md:w-60 shrink-0 md:text-left text-center">
+        <div class="logo logo-glow text-3xl md:text-4xl font-extrabold tracking-tight leading-none mb-4 md:mb-6">
           <span>H</span><span>O</span><span>N</span><span>N</span><span>Y</span><span>!</span>
         </div>
 
         <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"
-          alt="avatar" class="w-28 h-28 object-cover mb-6 avatar-glow">
+          alt="avatar"
+          class="avatar w-24 h-24 md:w-28 md:h-28 mx-auto md:mx-0 object-cover mb-4 md:mb-6 avatar-glow">
 
         <ul class="space-y-2 text-[15px]">
           <li>💻 <a href="https://hyper.sig-ma.shop" target="_blank" rel="noreferrer">hyper-x</a></li>
           <li>📸 <a href="https://www.instagram.com/bxw_.m" target="_blank" rel="noreferrer">instagram</a></li>
         </ul>
+
+        <!-- เส้นแบ่งสำหรับมือถือให้ชัดเจนขึ้น -->
+        <div class="md:hidden my-5 divider"></div>
       </aside>
 
-      <main class="flex-1 space-y-6">
+      <!-- เนื้อหา -->
+      <main class="flex-1 space-y-4 md:space-y-6">
+        <!-- Spotify -->
         <section class="no-print">
-          <iframe class="spotify-glow" style="border-radius:12px"
+          <iframe class="spotify-glow w-full" style="border-radius:12px"
             src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
             width="100%" height="152" frameborder="0" allowfullscreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"></iframe>
         </section>
 
-        <section class="card rounded-xl p-5">
-          <div class="text-[15px] leading-7">
+        <!-- แนะนำตัว -->
+        <section class="card rounded-xl p-4 md:p-5">
+          <div class="text-[15px] leading-7 md:text-[15px]">
 Hi, i'm <span class="font-semibold">HONNY</span>.
           </div>
 
-          <div class="divider my-4"></div>
+          <div class="divider my-3 md:my-4"></div>
 
           <div class="text-[15px] leading-7">
-            <div class="mb-1 font-semibold text-[16px]">My Shop</div>
-            <a href="https://hyperx.osnvc.com/" target="_blank" rel="noopener" class="btn-primary">🛒 เข้า Hyper-x Shop</a>
-            <div class="mt-2 text-[14px] text-[var(--muted)]">[จำหน่ายโปรแกรมช่วยเล่น ROV]</div>
+            <div class="mb-2 font-semibold text-[16px]">My Shop</div>
+            <a href="https://hyperx.osnvc.com/" target="_blank" rel="noopener" class="btn-primary w-full md:w-auto">🛒 เข้า Hyper-x Shop</a>
+            <div class="mt-2 text-[14px]" style="color:var(--muted)">[จำหน่ายโปรแกรมช่วยเล่น ROV]</div>
           </div>
         </section>
 
-        <section class="card rounded-xl p-5">
+        <!-- บล็อกข้อมูลเพิ่มเติม -->
+        <section class="card rounded-xl p-4 md:p-5">
           <div class="font-semibold mb-2">มาเสือกเรื่องของกูก่อน</div>
           <ul class="list-disc pl-6 space-y-1 text-[15px]">
             <li>ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตูยันซอกตีน</li>
           </ul>
         </section>
 
-        <section class="card rounded-xl p-5">
+        <!-- ติดต่อ -->
+        <section class="card rounded-xl p-4 md:p-5">
           <div class="font-semibold mb-2">Contact</div>
           <div class="text-[15px] leading-7">
             <div>Email: <a href="mailto:songdohe11@gmail.com">songdohe11@gmail.com</a></div>
@@ -180,17 +205,21 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
   </div>
 
   <script>
+    // ปีปัจจุบัน
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // ปรับจำนวนเม็ดฝนตามขนาดหน้าจอ (มือถือให้น้อยลงเพื่อความลื่น)
     const container = document.getElementById('rain');
-    const drops = Math.min(160, Math.floor(window.innerWidth / 6));
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    const drops = isMobile ? Math.min(80, Math.floor(window.innerWidth / 10))
+                           : Math.min(160, Math.floor(window.innerWidth / 6));
     for (let i=0; i<drops; i++){
       const d = document.createElement('div');
       d.className = 'drop';
       const left = Math.random() * 100;
       const delay = Math.random() * 5;
-      const duration = 2.6 + Math.random() * 2.5;
-      const height = 40 + Math.random() * 80;
+      const duration = (isMobile ? 3.2 : 2.6) + Math.random() * 2.5;
+      const height = (isMobile ? 30 : 40) + Math.random() * (isMobile ? 60 : 80);
       d.style.left = left + 'vw';
       d.style.animationDelay = delay + 's';
       d.style.animationDuration = duration + 's';
