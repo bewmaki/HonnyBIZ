@@ -4,126 +4,172 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MY PROFILE HONNY</title>
-<meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล พื้นหลังฝน, ตัวอักษรโมโน, ฝั่งซ้ายเป็นภาพและโซเชียล, มี Spotify ฝังด้านบน">
+<meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล โทนม่วง ไฟนีออน พร้อมลิงก์ร้านและ Spotify">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-  :root { --bg: #0b0c10; --fg: #e5e7eb; --muted: #9ca3af; --link: #93c5fd; }
-  html, body { height: 100%; }
-  body { background: var(--bg); color: var(--fg); font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace; }
-  /* subtle scanlines */
-  .scanlines:before {
-    content: "";
-    position: fixed; inset: 0; pointer-events: none; z-index: 5;
-    background: repeating-linear-gradient(to bottom, rgba(255,255,255,.03), rgba(255,255,255,.03) 1px, transparent 2px, transparent 3px);
-    mix-blend-mode: soft-light;
+  :root{
+    --bg:#0a0612;         /* ม่วงเข้มมาก */
+    --fg:#e7e3ff;         /* ตัวอักษรม่วงซีด */
+    --muted:#b9b2e6;      /* ข้อความรอง */
+    --primary:#a855f7;    /* ม่วงหลัก */
+    --primary-2:#7c3aed;  /* ม่วงเข้ม */
+    --ring:rgba(168,85,247,.35);
   }
-  /* rain */
-  .rain { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
-  .drop {
-    position: absolute; width: 1px; height: 60px;
-    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.6));
-    filter: blur(.3px); opacity: .5;
-    animation: fall linear infinite;
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1200px 600px at -10% -10%, rgba(124,58,237,.25), transparent 60%),
+      radial-gradient(1000px 600px at 110% 110%, rgba(168,85,247,.18), transparent 60%),
+      var(--bg);
+    color:var(--fg);
+    font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,'Liberation Mono','Courier New',monospace;
   }
-  @keyframes fall {
-    0% { transform: translateY(-100px); opacity: 0.2; }
-    100% { transform: translateY(110vh); opacity: 0.6; }
+
+  /* scanlines เล็กน้อย */
+  .scanlines:before{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:4;
+    background:repeating-linear-gradient(to bottom, rgba(255,255,255,.025), rgba(255,255,255,.025) 1px, transparent 2px, transparent 3px);
+    mix-blend-mode:soft-light;
   }
-  /* underline links */
-  a { text-decoration: underline; text-decoration-color: rgba(255,255,255,.35); }
-  a:hover { text-decoration-color: rgba(255,255,255,.9); }
-  .card { background: rgba(17,24,39,.55); border: 1px solid rgba(148,163,184,.2); backdrop-filter: blur(6px); }
-  /* gradient logo letters */
-  .logo span:nth-child(1){ color:#ef4444 } /* red */
-  .logo span:nth-child(2){ color:#f59e0b } /* amber */
-  .logo span:nth-child(3){ color:#10b981 } /* emerald */
-  .logo span:nth-child(4){ color:#60a5fa } /* blue */
-  .logo span:nth-child(5){ color:#a78bfa } /* violet */
-  /* print */
+
+  /* rain — ปรับเฉดเป็นม่วงซีด */
+  .rain{ position:fixed; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
+  .drop{
+    position:absolute; width:1px; height:60px;
+    background:linear-gradient(to bottom, rgba(168,85,247,0), rgba(168,85,247,.7));
+    filter:blur(.4px); opacity:.55; animation:fall linear infinite;
+  }
+  @keyframes fall{
+    0%{ transform:translateY(-120px); opacity:.25 }
+    100%{ transform:translateY(110vh); opacity:.7 }
+  }
+
+  /* ลิงก์ */
+  a{ text-decoration:underline; text-decoration-color:rgba(231,227,255,.35) }
+  a:hover{ text-decoration-color:rgba(231,227,255,.95) }
+
+  /* การ์ดแก้ว + เส้นเรืองม่วง */
+  .card{
+    background:rgba(22, 12, 40, .55);
+    border:1px solid rgba(168,85,247,.25);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 0 1px rgba(168,85,247,.2), 0 20px 40px -20px rgba(124,58,237,.45);
+  }
+
+  /* โลโก้ — ไล่สีในโทนม่วง */
+  .logo span{ display:inline-block; }
+  .logo span:nth-child(1){ color:#f0abfc }  /* fuchsia-300 */
+  .logo span:nth-child(2){ color:#d8b4fe }  /* purple-300 */
+  .logo span:nth-child(3){ color:#c4b5fd }  /* violet-300 */
+  .logo span:nth-child(4){ color:#a78bfa }  /* violet-400 */
+  .logo span:nth-child(5){ color:#8b5cf6 }  /* violet-500 */
+  .logo span:nth-child(6){ color:#7c3aed }  /* violet-600 */
+
+  /* ปุ่มม่วงนีออน */
+  .btn-primary{
+    background:linear-gradient(180deg, var(--primary), var(--primary-2));
+    color:#120a1f; font-weight:700;
+    border-radius:12px; padding:.55rem 1rem; display:inline-flex; align-items:center; gap:.5rem;
+    box-shadow: 0 10px 30px -12px rgba(168,85,247,.65), inset 0 0 0 1px rgba(255,255,255,.2);
+    text-decoration:none !important;
+  }
+  .btn-primary:hover{ filter:saturate(1.2) brightness(1.05) }
+
+  /* เส้นแบ่งสวยๆ */
+  .divider{
+    height:1px; background:linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,.4), rgba(168,85,247,0));
+  }
+
+  /* พิมพ์ */
   @media print{
-    .no-print { display:none!important }
-    .rain,.scanlines:before { display:none!important }
-    body { background: white; color:#111827 }
-    .card { background: white; border-color:#e5e7eb }
-    a { color:#1d4ed8 }
+    .no-print{display:none!important}
+    .rain,.scanlines:before{display:none!important}
+    body{background:white; color:#111827}
+    .card{background:white; border-color:#e5e7eb; box-shadow:none}
+    a{ color:#1d4ed8 }
   }
 </style>
 </head>
 <body class="scanlines">
-  <!-- animated rain -->
+  <!-- ฝนม่วงเคลื่อนไหว -->
   <div class="rain" id="rain"></div>
 
   <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-10">
     <div class="flex gap-6">
-      <!-- left sidebar -->
+      <!-- แถบซ้าย -->
       <aside class="w-60 shrink-0">
-        <div class="logo text-4xl font-bold tracking-tight leading-none mb-6">
-          <!-- เปลี่ยนตัวอักษรตรงนี้ถ้าอยากได้โลโก้แบบหลายสีทีละตัว -->
-          <span>H</span>O<span>N</span>N<span>Y</span><span>!</span><span>!</span>
+        <div class="logo text-4xl font-extrabold tracking-tight leading-none mb-6">
+          <!-- ปรับตัวอักษรโลโก้ได้ตามใจ -->
+          <span>H</span><span>O</span><span>N</span><span>N</span><span>Y</span><span>!</span>
         </div>
-        <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"  alt="avatar"  class="w-28 h-28 rounded-xl object-cover mb-6">
+
+        <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg" alt="avatar" class="w-28 h-28 rounded-xl object-cover mb-6 ring-2 ring-[rgba(168,85,247,.4)]">
+
         <ul class="space-y-2 text-[15px]">
           <li>💻 <a href="https://hyper.sig-ma.shop" target="_blank" rel="noreferrer">hyper-x</a></li>
           <li>📸 <a href="https://www.instagram.com/bxw_.m" target="_blank" rel="noreferrer">instagram</a></li>
         </ul>
       </aside>
 
-      <!-- main -->
+      <!-- เนื้อหา -->
       <main class="flex-1 space-y-6">
-        <!-- spotify -->
+        <!-- Spotify -->
         <section class="no-print">
-          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/2xLMifQCjDGFmkHkpNLD9h?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen=""
+          <iframe style="border-radius:12px; box-shadow:0 10px 30px -12px rgba(124,58,237,.55)" src="https://open.spotify.com/embed/track/2xLMifQCjDGFmkHkpNLD9h?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen=""
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
         </section>
 
-        <!-- intro -->
-        <section class="text-[15px] leading-7 whitespace-pre-line">
-Hi, i'm <span class="font-semibold">HONNY</span>.
-
-
-
-My Shop
-<a href="#" target="_blank" rel="noreferrer">Hyper-x Shop</a> [จำหน่ายโปรแกรมช่วยเล่น ROV]
-        </section>
-<div class="mt-2">
-  <a href="https://hyperx.osnvc.com/" target="_blank" rel="noopener"
-     class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-black font-semibold shadow">
-    🛒 Hyper-Shop
-  </a>
-</div>
-
-        <!-- projects / servers -->
+        <!-- แนะนำตัว -->
         <section class="card rounded-xl p-5">
-          <div class="font-semibold mb-2">ชอบหีแค่ไหน</div>
-          <ul class="list-disc pl-6 space-y-1">
-            <li><a href="#" target="_blank">ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ</a>
+          <div class="text-[15px] leading-7">
+Hi, i'm <span class="font-semibold">HONNY</span>.
+          </div>
+
+          <div class="divider my-4"></div>
+
+          <div class="text-[15px] leading-7">
+            <div class="mb-1 font-semibold text-[16px]">My Shop</div>
+            <a href="https://hyperx.osnvc.com/" target="_blank" rel="noopener" class="btn-primary">🛒 เข้า Hyper-x Shop</a>
+            <div class="mt-2 text-[14px] text-[var(--muted)]">[จำหน่ายโปรแกรมช่วยเล่น ROV]</div>
+          </div>
+        </section>
+
+        <!-- บล็อกข้อมูลเพิ่มเติม (ปรับข้อความได้ตามต้องการ) -->
+        <section class="card rounded-xl p-5">
+          <div class="font-semibold mb-2">About</div>
+          <ul class="list-disc pl-6 space-y-1 text-[15px]">
+            <li>ทำเว็บสไตล์มินิมอล โหลดไว โฟกัส UX</li>
+            <li>ชอบโทนม่วง/นีออน เน้นกลิ่นอายไซเบอร์</li>
           </ul>
         </section>
 
-        <!-- contact -->
-        <section class="text-[15px] leading-7">
-          <div>Contact: <a href="mailto:songdohe11@gmail.com">songdohe11@gmail.com</a></div>
-          <div>Discord: <span class="select-all">hon_.xyz</span></div>
+        <!-- ติดต่อ -->
+        <section class="card rounded-xl p-5">
+          <div class="font-semibold mb-2">Contact</div>
+          <div class="text-[15px] leading-7">
+            <div>อีเมล: <a href="mailto:songdohe11@gmail.com">songdohe11@gmail.com</a></div>
+            <div>Discord: <span class="select-all">hon_.xyz</span></div>
+          </div>
         </section>
 
-        <footer class="pt-6 text-center text-sm text-gray-400">
-          © <span id="year"></span> ชอบหีมากกกกกกกๆๆๆๆๆๆๆ <span class="text-emerald-400">♥</span>
+        <footer class="pt-2 text-center text-sm" style="color:var(--muted)">
+          © <span id="year"></span> HONNY — built with love in violet.
         </footer>
       </main>
     </div>
   </div>
 
   <script>
-    // year
+    // ปีปัจจุบัน
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // rain generator
+    // สร้างหยดฝนม่วง
     const container = document.getElementById('rain');
     const drops = Math.min(160, Math.floor(window.innerWidth / 6));
-    for (let i=0; i<drops; i++) {
+    for (let i=0; i<drops; i++){
       const d = document.createElement('div');
       d.className = 'drop';
       const left = Math.random() * 100;
