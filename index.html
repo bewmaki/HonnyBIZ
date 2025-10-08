@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MY PROFILE HONNY</title>
-<meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล โทนม่วง ไฟนีออน พร้อมลิงก์ร้านและ Spotify">
+<meta name="description" content="โปรไฟล์สไตล์เทอร์มินัล โทนม่วง ไฟนีออน พร้อมลิงก์และ Spotify">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
@@ -83,6 +83,34 @@
     height:1px; background:linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,.4), rgba(168,85,247,0));
   }
 
+  /* --- Glow ใหม่ ๆ --- */
+
+  /* โลโก้ glow เบาๆ */
+  .logo-glow{
+    text-shadow: 0 0 8px rgba(168,85,247,.6), 0 0 18px rgba(124,58,237,.5);
+  }
+
+  /* Avatar glow + หมุนช้า ๆ */
+  .avatar-glow{
+    border-radius:50%;
+    box-shadow:0 0 15px #a855f7, 0 0 30px #7c3aed;
+    animation:spin 20s linear infinite;
+  }
+  @keyframes spin{
+    0%{transform:rotate(0)}
+    100%{transform:rotate(360deg)}
+  }
+
+  /* Spotify glow */
+  .spotify-glow{
+    box-shadow: 0 0 20px #a855f7, 0 0 40px #9333ea, 0 0 60px #7e22ce;
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+  .spotify-glow:hover{
+    transform: scale(1.02);
+    box-shadow: 0 0 30px #c084fc, 0 0 60px #a855f7, 0 0 90px #9333ea;
+  }
+
   /* พิมพ์ */
   @media print{
     .no-print{display:none!important}
@@ -101,26 +129,17 @@
     <div class="flex gap-6">
       <!-- แถบซ้าย -->
       <aside class="w-60 shrink-0">
-        <div class="logo text-4xl font-extrabold tracking-tight leading-none mb-6">
+        <div class="logo logo-glow text-4xl font-extrabold tracking-tight leading-none mb-6">
           <!-- ปรับตัวอักษรโลโก้ได้ตามใจ -->
           <span>H</span><span>O</span><span>N</span><span>N</span><span>Y</span><span>!</span>
         </div>
 
-        <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg" <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"  alt="avatar"  class="w-28 h-28 object-cover mb-6 avatar-glow">
+        <img
+          src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"
+          alt="avatar"
+          class="w-28 h-28 object-cover mb-6 avatar-glow"
+        >
 
-<style>
-  /* ...โค้ด style เดิม... */
-
-  .avatar-glow {
-    border-radius: 50%;
-    box-shadow: 0 0 15px #a855f7, 0 0 30px #7c3aed;
-    animation: spin 20s linear infinite;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0); }
-    100% { transform: rotate(360deg); }
-  }
-</style>
         <ul class="space-y-2 text-[15px]">
           <li>💻 <a href="https://hyper.sig-ma.shop" target="_blank" rel="noreferrer">hyper-x</a></li>
           <li>📸 <a href="https://www.instagram.com/bxw_.m" target="_blank" rel="noreferrer">instagram</a></li>
@@ -131,8 +150,11 @@
       <main class="flex-1 space-y-6">
         <!-- Spotify -->
         <section class="no-print">
-          <iframe style="border-radius:12px; box-shadow:0 10px 30px -12px rgba(124,58,237,.55)" src="https://open.spotify.com/embed/track/2xLMifQCjDGFmkHkpNLD9h?utm_source=generator" width="100%" height="152" frameborder="0" allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          <iframe class="spotify-glow" style="border-radius:12px"
+            src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
+            width="100%" height="152" frameborder="0" allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"></iframe>
         </section>
 
         <!-- แนะนำตัว -->
@@ -150,14 +172,13 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
           </div>
         </section>
 
-        <!-- บล็อกข้อมูลเพิ่มเติม (ปรับข้อความได้ตามต้องการ) -->
+        <!-- บล็อกข้อมูลเพิ่มเติม -->
         <section class="card rounded-xl p-5">
           <div class="font-semibold mb-2">มาเสือกเรื่องของกูก่อน</div>
           <ul class="list-disc pl-6 space-y-1 text-[15px]">
             <li>ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตูยันซอกตีน</li>
           </ul>
         </section>
-        
 
         <!-- ติดต่อ -->
         <section class="card rounded-xl p-5">
