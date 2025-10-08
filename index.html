@@ -98,26 +98,42 @@
     50%{ box-shadow:0 0 25px #c084fc, 0 0 50px #a855f7, 0 0 80px #7c3aed; }
   }
 
-  .spotify-glow{
-    box-shadow: 0 0 20px #a855f7, 0 0 40px #9333ea, 0 0 60px #7e22ce;
-    transition: transform .3s ease, box-shadow .3s ease;
+  /* Spotify: ให้ตรงกรอบเป๊ะ */
+  .spotify-wrap{
+    position:relative;
+    border-radius:14px;
+    padding:2px;                       /* ขอบกรอบ */
+    background:linear-gradient(90deg,#7c3aed,#a855f7);
+    box-shadow:0 12px 32px -16px rgba(124,58,237,.6);
+    max-width:100%;
+    margin-inline:auto;
+    overflow:hidden;                    /* ตัดส่วนเกินให้โค้งพอดี */
   }
-  .spotify-glow:hover{
-    transform: scale(1.02);
-    box-shadow: 0 0 30px #c084fc, 0 0 60px #a855f7, 0 0 90px #9333ea;
+  .spotify-wrap::before{
+    content:"";
+    position:absolute; inset:-14px;
+    border-radius:22px;
+    background:radial-gradient(closest-side,rgba(168,85,247,.5),transparent 70%);
+    filter:blur(22px); opacity:.55; pointer-events:none;
+  }
+  .spotify-embed{
+    display:block;                      /* ตัดช่องว่าง baseline */
+    width:100%;
+    height:152px;
+    border:0;
+    border-radius:12px;                 /* มนเท่ากับกรอบ */
+  }
+  @media (max-width:420px){
+    .spotify-embed{ height:118px; }     /* จอเล็กไม่ล้น */
   }
 
   /* ปรับเฉพาะมือถือ */
   @media (max-width: 768px){
     .mobile-container{ padding-left: 1rem; padding-right: 1rem; }
     .mobile-gap{ gap: 1rem !important; }
-    .logo{ font-size: 2rem !important; }                /* โลโก้เล็กลงนิด */
-    .avatar{ width: 96px; height: 96px; }               /* อวตารขนาดพอดี */
-    .card{ padding: 1rem !important; }                  /* การ์ดกระชับ */
-    .no-print iframe{ height: 130px !important; }       /* Spotify เตี้ยลงเล็กน้อย */
-  }
-  @media (max-width: 420px){
-    .no-print iframe{ height: 110px !important; }       /* จอเล็กมาก */
+    .logo{ font-size: 2rem !important; }
+    .avatar{ width: 96px; height: 96px; }
+    .card{ padding: 1rem !important; }
   }
 
   @media print{
@@ -133,7 +149,6 @@
   <div class="rain" id="rain"></div>
 
   <div class="relative z-10 max-w-5xl mx-auto mobile-container px-4 py-6 md:py-10">
-    <!-- จากเดิมที่เรียงซ้าย-ขวา ให้มือถือเป็นคอลัมน์ก่อน แล้ว md ขึ้นไปค่อยเป็นแถว -->
     <div class="flex flex-col md:flex-row mobile-gap md:gap-6">
       <!-- แถบซ้าย -->
       <aside class="w-full md:w-60 shrink-0 md:text-left text-center">
@@ -150,19 +165,19 @@
           <li>📸 <a href="https://www.instagram.com/bxw_.m" target="_blank" rel="noreferrer">instagram</a></li>
         </ul>
 
-        <!-- เส้นแบ่งสำหรับมือถือให้ชัดเจนขึ้น -->
         <div class="md:hidden my-5 divider"></div>
       </aside>
 
       <!-- เนื้อหา -->
       <main class="flex-1 space-y-4 md:space-y-6">
-        <!-- Spotify -->
+        <!-- Spotify (ตรงกรอบ) -->
         <section class="no-print">
-          <iframe class="spotify-glow w-full" style="border-radius:12px"
-            src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
-            width="100%" height="152" frameborder="0" allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"></iframe>
+          <div class="spotify-wrap">
+            <iframe class="spotify-embed"
+              src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"></iframe>
+          </div>
         </section>
 
         <!-- แนะนำตัว -->
@@ -184,8 +199,8 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
         <section class="card rounded-xl p-4 md:p-5">
           <div class="font-semibold mb-2">จากใจผู้ชายคนนี้</div>
           <ul class="list-disc pl-6 space-y-1 text-[15px]">
-          <li>เขียนจากไข่ที่ไร้หมอยส่งถึงหอยที่ไร้ขน</li>
-          <li>ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตู ยันซอกตีน</li>
+            <li>เขียนจากไข่ที่ไร้หมอยส่งถึงหอยที่ไร้ขน</li>
+            <li>ผมชอบหีและชอบหีมากๆชอบเป็นชีวิตจิตใจ ถ้าได้เลียจะเลียให้ตั้งแต่ลูกบิดประตู ยันซอกตีน</li>
           </ul>
         </section>
 
@@ -209,7 +224,7 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
     // ปีปัจจุบัน
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ปรับจำนวนเม็ดฝนตามขนาดหน้าจอ (มือถือให้น้อยลงเพื่อความลื่น)
+    // ฝน: ลดจำนวนบนมือถือให้ลื่น
     const container = document.getElementById('rain');
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     const drops = isMobile ? Math.min(80, Math.floor(window.innerWidth / 10))
