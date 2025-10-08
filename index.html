@@ -11,11 +11,11 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
   :root{
-    --bg:#0a0612;         /* ม่วงเข้มมาก */
-    --fg:#e7e3ff;         /* ตัวอักษรม่วงซีด */
-    --muted:#b9b2e6;      /* ข้อความรอง */
-    --primary:#a855f7;    /* ม่วงหลัก */
-    --primary-2:#7c3aed;  /* ม่วงเข้ม */
+    --bg:#0a0612;         
+    --fg:#e7e3ff;         
+    --muted:#b9b2e6;      
+    --primary:#a855f7;    
+    --primary-2:#7c3aed;  
     --ring:rgba(168,85,247,.35);
   }
   html,body{height:100%}
@@ -28,14 +28,12 @@
     font-family:'JetBrains Mono',ui-monospace,Menlo,Consolas,'Liberation Mono','Courier New',monospace;
   }
 
-  /* scanlines เล็กน้อย */
   .scanlines:before{
     content:""; position:fixed; inset:0; pointer-events:none; z-index:4;
     background:repeating-linear-gradient(to bottom, rgba(255,255,255,.025), rgba(255,255,255,.025) 1px, transparent 2px, transparent 3px);
     mix-blend-mode:soft-light;
   }
 
-  /* rain — ปรับเฉดเป็นม่วงซีด */
   .rain{ position:fixed; inset:0; overflow:hidden; z-index:0; pointer-events:none; }
   .drop{
     position:absolute; width:1px; height:60px;
@@ -47,11 +45,9 @@
     100%{ transform:translateY(110vh); opacity:.7 }
   }
 
-  /* ลิงก์ */
   a{ text-decoration:underline; text-decoration-color:rgba(231,227,255,.35) }
   a:hover{ text-decoration-color:rgba(231,227,255,.95) }
 
-  /* การ์ดแก้ว + เส้นเรืองม่วง */
   .card{
     background:rgba(22, 12, 40, .55);
     border:1px solid rgba(168,85,247,.25);
@@ -59,16 +55,14 @@
     box-shadow: 0 0 0 1px rgba(168,85,247,.2), 0 20px 40px -20px rgba(124,58,237,.45);
   }
 
-  /* โลโก้ — ไล่สีในโทนม่วง */
   .logo span{ display:inline-block; }
-  .logo span:nth-child(1){ color:#f0abfc }  /* fuchsia-300 */
-  .logo span:nth-child(2){ color:#d8b4fe }  /* purple-300 */
-  .logo span:nth-child(3){ color:#c4b5fd }  /* violet-300 */
-  .logo span:nth-child(4){ color:#a78bfa }  /* violet-400 */
-  .logo span:nth-child(5){ color:#8b5cf6 }  /* violet-500 */
-  .logo span:nth-child(6){ color:#7c3aed }  /* violet-600 */
+  .logo span:nth-child(1){ color:#f0abfc }  
+  .logo span:nth-child(2){ color:#d8b4fe }  
+  .logo span:nth-child(3){ color:#c4b5fd }  
+  .logo span:nth-child(4){ color:#a78bfa }  
+  .logo span:nth-child(5){ color:#8b5cf6 }  
+  .logo span:nth-child(6){ color:#7c3aed }  
 
-  /* ปุ่มม่วงนีออน */
   .btn-primary{
     background:linear-gradient(180deg, var(--primary), var(--primary-2));
     color:#120a1f; font-weight:700;
@@ -78,30 +72,31 @@
   }
   .btn-primary:hover{ filter:saturate(1.2) brightness(1.05) }
 
-  /* เส้นแบ่งสวยๆ */
   .divider{
     height:1px; background:linear-gradient(90deg, rgba(168,85,247,0), rgba(168,85,247,.4), rgba(168,85,247,0));
   }
 
-  /* --- Glow ใหม่ ๆ --- */
-
-  /* โลโก้ glow เบาๆ */
+  /* โลโก้ Glow Pulse */
   .logo-glow{
-    text-shadow: 0 0 8px rgba(168,85,247,.6), 0 0 18px rgba(124,58,237,.5);
+    text-shadow: 0 0 10px rgba(168,85,247,.8), 0 0 25px rgba(124,58,237,.6);
+    animation:logoPulse 2.8s ease-in-out infinite;
+  }
+  @keyframes logoPulse{
+    0%,100% { text-shadow: 0 0 6px #a855f7, 0 0 20px #7c3aed; }
+    50%     { text-shadow: 0 0 16px #c084fc, 0 0 35px #9333ea; }
   }
 
-  /* Avatar glow + หมุนช้า ๆ */
+  /* Avatar glow pulse */
   .avatar-glow{
     border-radius:50%;
-    box-shadow:0 0 15px #a855f7, 0 0 30px #7c3aed;
-    animation:spin 20s linear infinite;
+    box-shadow:0 0 20px #a855f7, 0 0 40px #7c3aed;
+    animation:pulseGlow 3s ease-in-out infinite;
   }
-  @keyframes spin{
-    0%{transform:rotate(0)}
-    100%{transform:rotate(360deg)}
+  @keyframes pulseGlow{
+    0%,100%{ box-shadow:0 0 10px #a855f7, 0 0 20px #7c3aed; }
+    50%{ box-shadow:0 0 25px #c084fc, 0 0 50px #a855f7, 0 0 80px #7c3aed; }
   }
 
-  /* Spotify glow */
   .spotify-glow{
     box-shadow: 0 0 20px #a855f7, 0 0 40px #9333ea, 0 0 60px #7e22ce;
     transition: transform .3s ease, box-shadow .3s ease;
@@ -111,7 +106,6 @@
     box-shadow: 0 0 30px #c084fc, 0 0 60px #a855f7, 0 0 90px #9333ea;
   }
 
-  /* พิมพ์ */
   @media print{
     .no-print{display:none!important}
     .rain,.scanlines:before{display:none!important}
@@ -122,23 +116,17 @@
 </style>
 </head>
 <body class="scanlines">
-  <!-- ฝนม่วงเคลื่อนไหว -->
   <div class="rain" id="rain"></div>
 
   <div class="relative z-10 max-w-5xl mx-auto px-4 py-6 md:py-10">
     <div class="flex gap-6">
-      <!-- แถบซ้าย -->
       <aside class="w-60 shrink-0">
         <div class="logo logo-glow text-4xl font-extrabold tracking-tight leading-none mb-6">
-          <!-- ปรับตัวอักษรโลโก้ได้ตามใจ -->
           <span>H</span><span>O</span><span>N</span><span>N</span><span>Y</span><span>!</span>
         </div>
 
-        <img
-          src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"
-          alt="avatar"
-          class="w-28 h-28 object-cover mb-6 avatar-glow"
-        >
+        <img src="https://img5.pic.in.th/file/secure-sv1/1000189697.jpg"
+          alt="avatar" class="w-28 h-28 object-cover mb-6 avatar-glow">
 
         <ul class="space-y-2 text-[15px]">
           <li>💻 <a href="https://hyper.sig-ma.shop" target="_blank" rel="noreferrer">hyper-x</a></li>
@@ -146,9 +134,7 @@
         </ul>
       </aside>
 
-      <!-- เนื้อหา -->
       <main class="flex-1 space-y-6">
-        <!-- Spotify -->
         <section class="no-print">
           <iframe class="spotify-glow" style="border-radius:12px"
             src="https://open.spotify.com/embed/track/43eS61ezviPc61XDu6tRYR"
@@ -157,7 +143,6 @@
             loading="lazy"></iframe>
         </section>
 
-        <!-- แนะนำตัว -->
         <section class="card rounded-xl p-5">
           <div class="text-[15px] leading-7">
 Hi, i'm <span class="font-semibold">HONNY</span>.
@@ -172,7 +157,6 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
           </div>
         </section>
 
-        <!-- บล็อกข้อมูลเพิ่มเติม -->
         <section class="card rounded-xl p-5">
           <div class="font-semibold mb-2">มาเสือกเรื่องของกูก่อน</div>
           <ul class="list-disc pl-6 space-y-1 text-[15px]">
@@ -180,7 +164,6 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
           </ul>
         </section>
 
-        <!-- ติดต่อ -->
         <section class="card rounded-xl p-5">
           <div class="font-semibold mb-2">Contact</div>
           <div class="text-[15px] leading-7">
@@ -197,10 +180,8 @@ Hi, i'm <span class="font-semibold">HONNY</span>.
   </div>
 
   <script>
-    // ปีปัจจุบัน
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // สร้างหยดฝนม่วง
     const container = document.getElementById('rain');
     const drops = Math.min(160, Math.floor(window.innerWidth / 6));
     for (let i=0; i<drops; i++){
