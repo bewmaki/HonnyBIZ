@@ -23,6 +23,7 @@
     --card-bg: rgba(26, 9, 42, 0.65);
     --border-color: rgba(159, 85, 255, 0.2);
     --border-hover: rgba(159, 85, 255, 0.6);
+    --danger: #ff4747;
   }
   
   body.theme-matrix {
@@ -201,14 +202,76 @@
   .status-dot.idle { background-color: #f0b232; box-shadow: 0 0 5px #f0b232; }
   .status-dot.dnd { background-color: #f23f43; box-shadow: 0 0 5px #f23f43; }
   
+  /* Shoutbox Styles */
+  .shoutbox-messages-container {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .shoutbox-message {
+    font-size: 0.9rem;
+    word-break: break-word;
+  }
+  .shoutbox-message .name {
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .shoutbox-message .time {
+    color: var(--muted);
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+  }
+  .shoutbox-form {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .shoutbox-input {
+    background-color: rgba(0,0,0,0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s ease;
+  }
+  .shoutbox-input::placeholder {
+    color: var(--muted);
+  }
+  .shoutbox-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+  }
+  .shoutbox-button {
+     background: linear-gradient(90deg, var(--primary), var(--primary-2));
+     border: none;
+     border-radius: 6px;
+     color: #1f0a3d;
+     font-weight: 600;
+     cursor: pointer;
+     transition: all 0.3s ease;
+  }
+   .shoutbox-button:hover {
+     filter: brightness(1.2);
+   }
+
+
   .footer { text-align: center; margin-top: 2rem; color: var(--muted); font-size: 0.9rem; }
   
   .theme-switcher { margin-bottom: 1rem; display: flex; justify-content: center; gap: 0.5rem; }
-  .theme-switcher button {
+  .theme-switcher button, #admin-login-btn {
     background-color: transparent; border: 1px solid var(--border-color); color: var(--muted);
     padding: 0.25rem 0.75rem; border-radius: 6px; cursor: pointer; transition: all 0.3s ease;
   }
-  .theme-switcher button:hover { color: var(--fg); border-color: var(--primary); background-color: var(--border-color); }
+  .theme-switcher button:hover, #admin-login-btn:hover { color: var(--fg); border-color: var(--primary); background-color: var(--border-color); }
   
   ::-webkit-scrollbar { width: 8px; }
   ::-webkit-scrollbar-track { background: var(--bg); }
@@ -218,6 +281,43 @@
   .card > * { animation: contentFadeIn 0.6s ease-out forwards; opacity: 0; animation-delay: 0.4s; }
   .card .card-header { animation-delay: 0.2s; }
   @keyframes contentFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Admin Panel Styles */
+    .admin-container { max-width: 1000px; }
+    .table-container { border: 1px solid var(--border-color); background: var(--card-bg); }
+    th { border-bottom: 1px solid var(--border-color); }
+    td { border-bottom: 1px solid var(--border-color); }
+    tr:last-child td { border-bottom: none; }
+    .btn-delete {
+        background-color: transparent;
+        border: 1px solid var(--danger);
+        color: var(--danger);
+    }
+    .btn-delete:hover {
+        background-color: var(--danger);
+        color: var(--bg);
+    }
+    .password-prompt {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(10, 4, 26, 0.9);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .password-box {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+    }
+    .password-input {
+        background-color: rgba(0,0,0,0.3);
+        border: 1px solid var(--border-color);
+    }
+    .password-button {
+        background: var(--primary);
+        color: var(--bg);
+    }
   
 </style>
 </head>
@@ -232,7 +332,7 @@
  H   H O   O N  NN N  NN   Y   
  H   H  OOO  N   N N   N   Y   
       </pre>
-      <div class="loading-text">จะเสือกก็รอแป๊บบบ.<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
+      <div class="loading-text">กำลังโหลดโปรไฟล์...<span class="dots"><span>.</span><span>.</span><span>.</span></span></div>
     </div>
   </div>
 
@@ -282,22 +382,87 @@
         </div>
       </section>
 
+      <section class="card shoutbox-card" style="animation-delay: 0.5s; grid-column: 1 / -1;">
+        <div class="card-header"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h3v3.767L13.277 18H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm-2 10H6v-2h12v2zm-4-4H6V6h8v2z"></path></svg><h2>SHOUTBOX</h2></div>
+        <div id="shoutbox-messages-container" class="shoutbox-messages-container">
+            <!-- Messages will be loaded here -->
+        </div>
+        <div class="shoutbox-form">
+            <input type="text" id="shoutbox-name" class="shoutbox-input" placeholder="Name">
+            <input type="text" id="shoutbox-message" class="shoutbox-input" placeholder="Type a message...">
+        </div>
+        <button id="shoutbox-send" class="shoutbox-button">SEND</button>
+      </section>
+
     </div>
     <footer class="footer">
         <div class="theme-switcher">
             <button data-theme="default">Purple</button>
             <button data-theme="theme-matrix">Matrix</button>
             <button data-theme="theme-alert">Alert</button>
+            <button id="admin-login-btn">HONNYxyz</button>
         </div>
       © <span id="year"></span> HONNY — LOVE HEE
     </footer>
   </div>
 
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
+  <!-- Admin Login Modal -->
+  <div id="password-prompt" class="password-prompt hidden">
+    <div class="password-box p-8 rounded-lg shadow-lg text-center space-y-4 w-11/12 max-w-sm">
+        <h2 class="text-xl font-bold text-white">Enter Admin Password</h2>
+        <input type="password" id="password-input" class="password-input w-full p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
+        <button id="password-submit" class="password-button w-full p-2 rounded-md font-bold">Login</button>
+        <p id="error-message" class="text-red-500 h-4"></p>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <main id="admin-panel" class="admin-container mx-auto p-4 md:p-8 hidden">
+    <header class="mb-8 text-center relative">
+        <button id="back-to-main-btn" class="absolute top-0 left-0 text-muted hover:text-white transition-colors">← Back to Main</button>
+        <h1 class="text-3xl font-bold text-white tracking-wider" style="text-shadow: 0 0 10px var(--primary);">SHOUTBOX ADMIN PANEL</h1>
+        <p class="text-muted">จัดการข้อความทั้งหมดที่นี่</p>
+    </header>
+
+    <div class="table-container rounded-lg backdrop-blur-sm overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-left">
+                <thead class="text-sm uppercase">
+                    <tr>
+                        <th class="py-3 px-6">Timestamp</th>
+                        <th class="py-3 px-6">Name</th>
+                        <th class="py-3 px-6">Message</th>
+                        <th class="py-3 px-6 text-center">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="messages-tbody">
+                    <!-- Admin messages will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </main>
+  
+  <script type="module">
+    // Firebase Imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, limit, doc, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        // --- Element References ---
         const preloader = document.getElementById('preloader');
+        const mainContainer = document.querySelector('.main-container');
+        const footer = document.querySelector('.footer');
+        const adminPanel = document.getElementById('admin-panel');
+        const passwordPrompt = document.getElementById('password-prompt');
+        const adminLoginBtn = document.getElementById('admin-login-btn');
+        const backToMainBtn = document.getElementById('back-to-main-btn');
+
+        // --- Standard UI Setup ---
         const loadingText = document.querySelector('.loading-text');
         loadingText.innerHTML = loadingText.textContent.replace('...', '<span class="dots"><span>.</span><span>.</span><span>.</span></span>');
+        document.getElementById('year').textContent = new Date().getFullYear();
 
         const themeButtons = document.querySelectorAll('.theme-switcher button');
         themeButtons.forEach(button => {
@@ -308,18 +473,15 @@
             });
         });
 
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        const container = document.querySelector('.main-container');
-        container.addEventListener('mousemove', e => {
-            const rect = container.getBoundingClientRect();
+        mainContainer.addEventListener('mousemove', e => {
+            const rect = mainContainer.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            container.style.setProperty('--mouse-x', `${x}px`);
-            container.style.setProperty('--mouse-y', `${y}px`);
+            mainContainer.style.setProperty('--mouse-x', `${x}px`);
+            mainContainer.style.setProperty('--mouse-y', `${y}px`);
         });
 
-        document.querySelectorAll('.card').forEach(card => {
+        document.querySelectorAll('.card:not(.shoutbox-card)').forEach(card => {
             card.addEventListener('mousemove', e => {
                 const rect = card.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -337,6 +499,7 @@
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
         document.addEventListener('keydown', e => {
+            if (e.target.tagName.toLowerCase() === 'input') return; // Ignore konami code if typing in input
             if (e.key.toLowerCase() === konamiCode[konamiIndex].toLowerCase()) {
                 konamiIndex++;
                 if (konamiIndex === konamiCode.length) {
@@ -354,22 +517,15 @@
             retina_detect: true, background: { color: "transparent" },
         });
         
-        // --- Lanyard Real-Time Status in Profile Card ---
+        // --- Lanyard Real-Time Status ---
         const discordId = '1411409155490709544';
         const lanyardContent = document.getElementById('lanyard-status-profile');
-
-        const statusMap = {
-            online: "ออนไลน์",
-            idle: "ไม่อยู่",
-            dnd: "ห้ามรบกวน",
-        };
+        const statusMap = { online: "ออนไลน์", idle: "ไม่อยู่", dnd: "ห้ามรบกวน" };
 
         async function updateLanyardStatus() {
             try {
                 const response = await fetch(`https://api.lanyard.rest/v1/users/${discordId}`);
-                if (!response.ok) {
-                    throw new Error(`API returned status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`API returned status: ${response.status}`);
                 const { data } = await response.json();
 
                 if (!data || data.discord_status === 'offline') {
@@ -382,52 +538,143 @@
                 const game = data.activities.find(activity => activity.type === 0);
 
                 if (spotify) {
-                    html = `
-                        <div class="lanyard-content">
-                            <img src="${spotify.album_art_url}" alt="Album Art" class="lanyard-album-art">
-                            <div class="lanyard-info">
-                                <strong style="color:var(--fg)">Listening to Spotify</strong>
-                                <span>${spotify.song}</span>
-                                <span style="color:var(--muted)">by ${spotify.artist}</span>
-                            </div>
-                        </div>
-                    `;
+                    html = `<div class="lanyard-content"><img src="${spotify.album_art_url}" alt="Album Art" class="lanyard-album-art"><div class="lanyard-info"><strong style="color:var(--fg)">Listening to Spotify</strong><span>${spotify.song}</span><span style="color:var(--muted)">by ${spotify.artist}</span></div></div>`;
                 } else if (game) {
-                    const largeImg = game.assets && game.assets.large_image 
-                        ? `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png` 
-                        : `https://dcdn.dstn.to/app-icons/${game.application_id}.png`;
-                    html = `
-                        <div class="lanyard-content">
-                            <img src="${largeImg}" alt="Game Art" class="lanyard-album-art">
-                            <div class="lanyard-info">
-                                 <strong style="color:var(--fg)">Playing ${game.name}</strong>
-                                 <span style="color:var(--muted)">${game.details || ''}</span>
-                               </div>
-                        </div>
-                    `;
+                    const largeImg = game.assets && game.assets.large_image ? `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png` : `https://dcdn.dstn.to/app-icons/${game.application_id}.png`;
+                    html = `<div class="lanyard-content"><img src="${largeImg}" alt="Game Art" class="lanyard-album-art"><div class="lanyard-info"><strong style="color:var(--fg)">Playing ${game.name}</strong><span style="color:var(--muted)">${game.details || ''}</span></div></div>`;
                 } else {
                     const statusText = statusMap[data.discord_status] || data.discord_status;
-                    html = `
-                        <div class="lanyard-content">
-                            <div class="status-dot ${data.discord_status}"></div>
-                            <div class="lanyard-info">
-                                <strong style="color:var(--fg); text-transform: capitalize;">${statusText}</strong>
-                                <span style="color:var(--muted)">Online on Discord</span>
-                            </div>
-                        </div>
-                    `;
+                    html = `<div class="lanyard-content"><div class="status-dot ${data.discord_status}"></div><div class="lanyard-info"><strong style="color:var(--fg); text-transform: capitalize;">${statusText}</strong><span style="color:var(--muted)">Online on Discord</span></div></div>`;
                 }
                 lanyardContent.innerHTML = html;
-
             } catch (error) {
                 console.error('Lanyard Fetch Error:', error);
                 lanyardContent.innerHTML = `<div class="lanyard-content"><p style="color:var(--muted)">Failed to load status.</p></div>`;
             }
         }
-        
         updateLanyardStatus();
         setInterval(updateLanyardStatus, 15000); 
 
+        // --- View Toggling ---
+        const showAdminView = () => {
+            mainContainer.classList.add('hidden');
+            footer.classList.add('hidden');
+            adminPanel.classList.remove('hidden');
+        };
+        const showMainView = () => {
+            mainContainer.classList.remove('hidden');
+            footer.classList.remove('hidden');
+            adminPanel.classList.add('hidden');
+            passwordPrompt.classList.add('hidden');
+        };
+
+        adminLoginBtn.addEventListener('click', () => passwordPrompt.classList.remove('hidden'));
+        backToMainBtn.addEventListener('click', showMainView);
+
+        // --- Firebase & Shoutbox/Admin Logic ---
+        try {
+            const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "dummy", authDomain: "dummy.firebaseapp.com", projectId: "dummy" };
+
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+
+            const messagesCollection = collection(db, `/artifacts/${appId}/public/data/shoutbox_messages`);
+            
+            // --- Public Shoutbox Logic ---
+            const shoutboxMessagesContainer = document.getElementById('shoutbox-messages-container');
+            const nameInput = document.getElementById('shoutbox-name');
+            const messageInput = document.getElementById('shoutbox-message');
+            const sendButton = document.getElementById('shoutbox-send');
+            
+            const publicQuery = query(messagesCollection, orderBy("timestamp", "desc"), limit(50));
+            onSnapshot(publicQuery, (snapshot) => {
+                const messages = [];
+                snapshot.forEach(doc => messages.push({ ...doc.data(), id: doc.id }));
+                messages.sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
+                shoutboxMessagesContainer.innerHTML = '';
+                messages.forEach(msg => {
+                    const msgElement = document.createElement('div');
+                    msgElement.classList.add('shoutbox-message');
+                    const time = msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+                    msgElement.innerHTML = `<span class="time">[${time}]</span> <span class="name">${msg.name || 'Anonymous'}:</span> <span>${msg.message}</span>`;
+                    shoutboxMessagesContainer.appendChild(msgElement);
+                });
+                shoutboxMessagesContainer.scrollTop = shoutboxMessagesContainer.scrollHeight;
+            });
+            
+            const sendMessage = async () => {
+                const message = messageInput.value.trim();
+                if (message) {
+                    await addDoc(messagesCollection, {
+                        name: nameInput.value.trim() || 'Anonymous',
+                        message: message,
+                        timestamp: serverTimestamp()
+                    });
+                    messageInput.value = '';
+                }
+            };
+            sendButton.addEventListener('click', sendMessage);
+            messageInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+            // --- Admin Panel Logic ---
+            const ADMIN_PASSWORD = ""; // คุณสามารถเปลี่ยนรหัสผ่านได้ที่นี่
+            const passwordInput = document.getElementById('password-input');
+            const passwordSubmit = document.getElementById('password-submit');
+            const errorMessage = document.getElementById('error-message');
+            const messagesTbody = document.getElementById('messages-tbody');
+            let adminListener = null; // To hold the listener function
+
+            const checkPassword = () => {
+                if (passwordInput.value === ADMIN_PASSWORD) {
+                    passwordPrompt.classList.add('hidden');
+                    showAdminView();
+                    if (!adminListener) initializeAdminPanel(); // Initialize only once
+                } else {
+                    errorMessage.textContent = 'Incorrect Password.';
+                    passwordInput.value = '';
+                }
+            };
+            passwordSubmit.addEventListener('click', checkPassword);
+            passwordInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') checkPassword(); });
+
+            function initializeAdminPanel() {
+                const adminQuery = query(messagesCollection, orderBy("timestamp", "desc"));
+                adminListener = onSnapshot(adminQuery, (snapshot) => {
+                    let messages = [];
+                    snapshot.forEach(doc => messages.push({ ...doc.data(), id: doc.id }));
+                    
+                    messagesTbody.innerHTML = '';
+                    if (messages.length === 0) {
+                        messagesTbody.innerHTML = '<tr><td colspan="4" class="text-center p-4 text-muted">No messages yet.</td></tr>'
+                    }
+                    messages.forEach(msg => {
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-gray-800/20 transition-colors duration-200';
+                        const time = msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleString('th-TH') : 'N/A';
+                        tr.innerHTML = `<td class="py-3 px-6 text-muted text-xs">${time}</td><td class="py-3 px-6 font-semibold" style="color: var(--primary);">${msg.name || 'Anonymous'}</td><td class="py-3 px-6">${msg.message}</td><td class="py-3 px-6 text-center"><button data-id="${msg.id}" class="btn-delete text-xs font-bold py-1 px-3 rounded-md transition-all duration-200">DELETE</button></td>`;
+                        messagesTbody.appendChild(tr);
+                    });
+                });
+
+                messagesTbody.addEventListener('click', async (e) => {
+                    if (e.target.classList.contains('btn-delete')) {
+                        const docId = e.target.dataset.id;
+                        await deleteDoc(doc(db, `/artifacts/${appId}/public/data/shoutbox_messages`, docId));
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+        }
     });
 
     window.addEventListener('load', () => {
