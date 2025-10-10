@@ -376,7 +376,7 @@
       <section class="card connect-card" style="animation-delay: 0.4s;">
         <div class="card-header"><svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"></path></svg><h2>CONTACT</h2></div>
         <div class="connect-links">
-            <a href="https://www.instagram.com/bxw_.m" target="_blank" class="connect-link"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram"><span>Instagram</span></a>
+            <a href="https://www.instagram.com/bxw_.m" target="_blank" class="connect-link"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111466.png" alt="Instagram"><span>Instagram</span></a>
             <a href="https://www.facebook.com/share/1FVKAADgTX/" target="_blank" class="connect-link"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook"><span>Facebook</span></a>
             <a href="https://discord.com/users/1411409155490709544" target="_blank" class="connect-link"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" alt="Discord"><span>Discord</span></a>
         </div>
@@ -447,7 +447,7 @@
     // Firebase Imports
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, limit, doc, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, doc, deleteDoc, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     window.addEventListener('DOMContentLoaded', async () => {
         // --- Element References ---
@@ -574,7 +574,13 @@
         // --- Firebase & Shoutbox/Admin Logic ---
         try {
             const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-            const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : { apiKey: "dummy", authDomain: "dummy.firebaseapp.com", projectId: "dummy" };
+            const firebaseConfig = typeof __firebase_config !== 'undefined' 
+                ? JSON.parse(__firebase_config) 
+                : { 
+                    apiKey: "YOUR_API_KEY", 
+                    authDomain: "YOUR_AUTH_DOMAIN", 
+                    projectId: "YOUR_PROJECT_ID" 
+                  };
 
             const app = initializeApp(firebaseConfig);
             const auth = getAuth(app);
@@ -625,7 +631,7 @@
             messageInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
 
             // --- Admin Panel Logic ---
-            const ADMIN_PASSWORD = ""; // คุณสามารถเปลี่ยนรหัสผ่านได้ที่นี่
+            const ADMIN_PASSWORD = "000"; // คุณสามารถเปลี่ยนรหัสผ่านได้ที่นี่
             const passwordInput = document.getElementById('password-input');
             const passwordSubmit = document.getElementById('password-submit');
             const errorMessage = document.getElementById('error-message');
@@ -674,6 +680,9 @@
 
         } catch (error) {
             console.error("Firebase initialization failed:", error);
+            // Optionally, disable shoutbox functionality here
+            document.getElementById('shoutbox-send').disabled = true;
+            document.getElementById('shoutbox-send').textContent = 'Error';
         }
     });
 
